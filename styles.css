@@ -171,8 +171,7 @@ p {
 /* Hero Section */
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+    background-color: #333; /* Fallback color */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -182,6 +181,7 @@ p {
     text-align: center;
     color: white;
     position: relative;
+    transition: background-image 1s ease-in-out;
 }
 
 .hero-content {
@@ -224,6 +224,33 @@ p {
     right: 0;
     bottom: 0;
     background: rgba(28, 59, 138, 0.3);
+}
+
+.hero-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 10px 15px;
+    cursor: pointer;
+    z-index: 3;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.hero-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.hero-nav-btn.prev {
+    left: 20px;
+}
+
+.hero-nav-btn.next {
+    right: 20px;
 }
 
 /* Section Headers */
@@ -641,8 +668,8 @@ p {
 
 .contact-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1fr;
+    gap: 2rem;
 }
 
 .contact-info {
