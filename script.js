@@ -57,9 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            console.log('Successfully fetched data.json');
             return response.json();
         })
         .then(data => {
+            console.log('Parsed data:', data);
+            console.log('Number of performances:', data.performances.length);
+            console.log('Number of gallery items:', data.gallery.length);
             renderPerformances(data.performances);
             renderGallery(data.gallery, 'recent');
             renderContactInfo(data.officers);
@@ -75,9 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderPerformances(performances) {
         const grid = document.getElementById('performances-grid');
-        if (!grid) return;
+        if (!grid) {
+            console.error('Performances grid not found');
+            return;
+        }
+        console.log('Rendering', performances.length, 'performances');
         grid.innerHTML = '';
-        performances.forEach(perf => {
+        performances.forEach((perf, index) => {
+            console.log('Rendering performance', index + 1, ':', perf.title);
             const card = document.createElement('div');
             card.className = 'performance-card';
             card.innerHTML = `

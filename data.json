@@ -10,6 +10,15 @@
   },
   "performances": [
     {
+      "day": "15",
+      "month": "APR",
+      "title": "Spring Jazz Concert",
+      "time": "7:00 PM - 9:00 PM",
+      "location": "DVHS Auditorium",
+      "description": "Our biggest performance of the year! Join us for an evening of jazz classics and original compositions.",
+      "tags": ["Major Event", "All Welcome"]
+    },
+    {
       "day": "18",
       "month": "OCT",
       "title": "Performance at Oakmont Senior Center",
