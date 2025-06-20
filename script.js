@@ -1,361 +1,216 @@
-// Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
-
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-}));
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Gallery Tab Functionality
-const galleryTabBtns = document.querySelectorAll('.gallery-tabs .tab-btn');
-const gallerySections = document.querySelectorAll('.gallery-section');
-
-galleryTabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Remove active class from all buttons and sections
-        galleryTabBtns.forEach(b => b.classList.remove('active'));
-        gallerySections.forEach(section => section.classList.remove('active'));
-        
-        // Add active class to clicked button
-        btn.classList.add('active');
-        
-        // Show corresponding section
-        const targetSection = document.getElementById(btn.dataset.tab);
-        if (targetSection) {
-            targetSection.classList.add('active');
-        }
-    });
-});
-
-// Join Form Submission
-const joinForm = document.getElementById('join-form');
-if (joinForm) {
-    joinForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        
-        // Simple validation
-        if (!data.name || !data.email || !data.grade || !data.instrument || !data.experience) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(data.email)) {
-            alert('Please enter a valid email address.');
-            return;
-        }
-        
-        // Simulate form submission
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        
-        submitBtn.textContent = 'Submitting...';
-        submitBtn.disabled = true;
-        
-        // Simulate API call
-        setTimeout(() => {
-            alert('Thank you for your interest in joining the Jazz Club! We will contact you soon with more information about our next meeting.');
-            this.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
-    });
-}
-
-// Contact Form Submission
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        
-        // Simple validation
-        if (!data.name || !data.email || !data.subject || !data.message) {
-            alert('Please fill in all required fields.');
-            return;
-        }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(data.email)) {
-            alert('Please enter a valid email address.');
-            return;
-        }
-        
-        // Simulate form submission
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        // Simulate API call
-        setTimeout(() => {
-            alert('Thank you for your message! We will get back to you as soon as possible.');
-            this.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
-    });
-}
-
-// Navbar background change on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(44, 90, 160, 0.98)';
-    } else {
-        navbar.style.background = 'rgba(44, 90, 160, 0.95)';
-    }
-});
-
-// Animate elements on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
 document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.feature, .performance-card, .gallery-item, .contact-item, .detail-item');
-    
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-});
 
-// Add loading animation for images
-document.addEventListener('DOMContentLoaded', () => {
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-        img.addEventListener('load', () => {
-            img.style.opacity = '1';
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
         });
-        img.style.opacity = '0';
-        img.style.transition = 'opacity 0.3s ease';
-    });
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        const rate = scrolled * -0.5;
-        hero.style.transform = `translateY(${rate}px)`;
     }
-});
 
-// Add hover effects for social links
-document.addEventListener('DOMContentLoaded', () => {
-    const socialLinks = document.querySelectorAll('.social-links a');
-    socialLinks.forEach(link => {
-        link.addEventListener('mouseenter', () => {
-            link.style.transform = 'scale(1.1) rotate(5deg)';
-        });
-        link.addEventListener('mouseleave', () => {
-            link.style.transform = 'scale(1) rotate(0deg)';
-        });
-    });
-});
-
-// Add typing effect for hero title
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    type();
-}
-
-// Initialize typing effect when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        setTimeout(() => {
-            typeWriter(heroTitle, originalText, 150);
-        }, 500);
-    }
-});
-
-// Add countdown timer for performances
-function updatePerformanceCountdown() {
-    const performanceCards = document.querySelectorAll('.performance-card');
-    performanceCards.forEach(card => {
-        const dateElement = card.querySelector('.performance-date .day');
-        const monthElement = card.querySelector('.performance-date .month');
-        
-        if (dateElement && monthElement) {
-            const day = parseInt(dateElement.textContent);
-            const month = monthElement.textContent;
-            const currentYear = new Date().getFullYear();
-            
-            // Convert month abbreviation to number
-            const months = {
-                'JAN': 0, 'FEB': 1, 'MAR': 2, 'APR': 3, 'MAY': 4, 'JUN': 5,
-                'JUL': 6, 'AUG': 7, 'SEP': 8, 'OCT': 9, 'NOV': 10, 'DEC': 11
-            };
-            
-            const performanceDate = new Date(currentYear, months[month], day);
-            const now = new Date();
-            const diffTime = performanceDate - now;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            if (diffDays > 0) {
-                // Add countdown display if needed
-                const countdownElement = card.querySelector('.countdown');
-                if (!countdownElement) {
-                    const countdown = document.createElement('p');
-                    countdown.className = 'countdown';
-                    countdown.style.color = '#2c5aa0';
-                    countdown.style.fontSize = '0.9rem';
-                    countdown.style.fontWeight = 'bold';
-                    countdown.textContent = `${diffDays} days until performance`;
-                    card.querySelector('.performance-details').appendChild(countdown);
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Close mobile menu on link click
+                if (navLinks && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    if (menuToggle) menuToggle.classList.remove('active');
                 }
             }
-        }
+        });
     });
-}
 
-// Update countdown every day
-setInterval(updatePerformanceCountdown, 24 * 60 * 60 * 1000);
-updatePerformanceCountdown(); // Initial call
+    // Contact form submission
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
 
-// Add keyboard navigation support
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        // Close mobile menu
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+            if (!name || !email || !message) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            const subject = `Message from ${name}`;
+            const mailtoLink = `mailto:dvjazzclub@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message + "\n\nFrom: " + email)}`;
+
+            window.location.href = mailtoLink;
+            contactForm.reset();
+        });
     }
-});
 
-// Add touch support for mobile devices
-let touchStartX = 0;
-let touchEndX = 0;
+    // Fetch and render dynamic content
+    fetch('data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            renderPerformances(data.performances);
+            renderGallery(data.gallery, 'recent');
+            renderContactInfo(data.officers);
+            setupGalleryTabs(data.gallery);
+        })
+        .catch(error => {
+            console.error('Error fetching or processing data:', error);
+            const performancesGrid = document.getElementById('performances-grid');
+            if(performancesGrid) performancesGrid.innerHTML = '<p>Could not load performance data. Please try again later.</p>';
+            const galleryGrid = document.getElementById('gallery-grid');
+            if(galleryGrid) galleryGrid.innerHTML = '<p>Could not load gallery data. Please try again later.</p>';
+        });
 
-document.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-});
-
-document.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-});
-
-function handleSwipe() {
-    const swipeThreshold = 50;
-    const diff = touchStartX - touchEndX;
-    
-    if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0 && navMenu.classList.contains('active')) {
-            // Swipe left - close menu
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
+    function renderPerformances(performances) {
+        const grid = document.getElementById('performances-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        performances.forEach(perf => {
+            const card = document.createElement('div');
+            card.className = 'performance-card';
+            card.innerHTML = `
+                <div class="performance-date">
+                    <span class="day">${perf.day}</span>
+                    <span class="month">${perf.month}</span>
+                </div>
+                <div class="performance-details">
+                    <h3>${perf.title}</h3>
+                    <p class="performance-time"><i class="far fa-clock"></i> ${perf.time}</p>
+                    <p class="performance-location"><i class="fas fa-map-marker-alt"></i> ${perf.location}</p>
+                    <p class="performance-description">${perf.description}</p>
+                    <div class="performance-tags">
+                        ${perf.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
     }
-}
 
-// Add smooth reveal animation for join benefits
-document.addEventListener('DOMContentLoaded', () => {
-    const joinBenefits = document.querySelectorAll('.join-benefits li');
-    joinBenefits.forEach((benefit, index) => {
-        benefit.style.opacity = '0';
-        benefit.style.transform = 'translateX(-20px)';
-        benefit.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    function renderGallery(galleryItems, category) {
+        const grid = document.getElementById('gallery-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
         
-        setTimeout(() => {
-            benefit.style.opacity = '1';
-            benefit.style.transform = 'translateX(0)';
-        }, 200 * (index + 1));
-    });
-});
+        const filteredItems = galleryItems.filter(item => item.category === category);
 
-// Add interactive gallery hover effects
-document.addEventListener('DOMContentLoaded', () => {
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    galleryItems.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            item.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        item.addEventListener('mouseleave', () => {
-            item.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-});
+        if (filteredItems.length === 0) {
+            grid.innerHTML = '<p class="gallery-empty">No items to display in this category yet. Check back soon!</p>';
+            return;
+        }
 
-// Add performance card interaction
-document.addEventListener('DOMContentLoaded', () => {
-    const performanceCards = document.querySelectorAll('.performance-card');
-    performanceCards.forEach(card => {
-        card.addEventListener('click', () => {
-            // Add a subtle click effect
-            card.style.transform = 'translateY(-5px) scale(0.98)';
-            setTimeout(() => {
-                card.style.transform = 'translateY(-10px) scale(1)';
-            }, 150);
-        });
-    });
-});
+        filteredItems.forEach(item => {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
 
-// Add form field animations
-document.addEventListener('DOMContentLoaded', () => {
-    const formFields = document.querySelectorAll('input, select, textarea');
-    formFields.forEach(field => {
-        field.addEventListener('focus', () => {
-            field.parentElement.style.transform = 'translateY(-2px)';
+            if (item.type === 'image') {
+                galleryItem.innerHTML = `
+                    <img src="${item.url}" alt="${item.title}" loading="lazy">
+                    <div class="gallery-item-info">
+                        <p>${item.title}</p>
+                    </div>
+                `;
+            } else if (item.type === 'video') {
+                galleryItem.innerHTML = `
+                    <div class="video-container">
+                        <iframe src="${item.embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="gallery-item-info">
+                        <p>${item.title}</p>
+                    </div>
+                `;
+            }
+            grid.appendChild(galleryItem);
         });
-        field.addEventListener('blur', () => {
-            field.parentElement.style.transform = 'translateY(0)';
+    }
+    
+    function setupGalleryTabs(galleryItems) {
+        const tabs = document.querySelectorAll('.tab-btn');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.getAttribute('data-category');
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderGallery(galleryItems, category);
+            });
         });
-    });
+    }
+
+
+    function renderContactInfo(officers) {
+        const container = document.getElementById('contact-info');
+        if (!container) return;
+        
+        const officerList = `
+            <strong>Vice President:</strong> ${officers.vicePresident}<br>
+            <strong>Conductor:</strong> ${officers.conductor}<br>
+            <strong>Secretary:</strong> ${officers.secretary}<br>
+            <strong>Treasurer:</strong> ${officers.treasurer}<br>
+            <strong>PR Officer:</strong> ${officers.prOfficer}
+        `;
+
+        container.innerHTML = `
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                    <h4>Club Email</h4>
+                    <p><a href="mailto:dvjazzclub@gmail.com">dvjazzclub@gmail.com</a></p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-instagram"></i>
+                <div>
+                    <h4>Instagram</h4>
+                    <p><a href="https://www.instagram.com/dvhsjazzclub" target="_blank">@dvhsjazzclub</a></p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-discord"></i>
+                <div>
+                    <h4>Discord</h4>
+                    <p><a href="https://discord.gg/ap65wjgm4k" target="_blank">Join our Server</a></p>
+                </div>
+            </div>
+             <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <h4>Meetings</h4>
+                    <p>Fridays at Lunch, P124 (Band Room)</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-user-tie"></i>
+                <div>
+                    <h4>Faculty Advisor</h4>
+                    <p>${officers.facultyAdvisor}</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-user-graduate"></i>
+                <div>
+                    <h4>President</h4>
+                    <p>${officers.president}</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-users"></i>
+                <div>
+                    <h4>Club Officers</h4>
+                    <p class="officer-list">${officerList}</p>
+                </div>
+            </div>
+        `;
+    }
 }); 

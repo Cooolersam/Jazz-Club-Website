@@ -1,6 +1,128 @@
 # Dougherty Valley High School Jazz Club Website
 
-A modern, responsive website for the Dougherty Valley High School jazz club, featuring student performances, photo galleries, and membership information.
+This is the official website for the Dougherty Valley High School Jazz Club.
+
+The site is built with plain HTML, CSS, and JavaScript. It's designed to be easily updatable by club officers, even those with no coding experience.
+
+## How to Update the Website
+
+All the website's content (performances, gallery, officers) is stored in a single file: `data.json`. To update the site, you just need to edit this file directly in GitHub.
+
+**Location of the content file:** [data.json](data.json)
+
+---
+
+### Editing `data.json` on GitHub
+
+1.  Navigate to the `data.json` file in the repository.
+2.  Click the **pencil icon** (Edit this file) in the top-right corner.
+3.  Make your changes according to the instructions below.
+4.  Scroll to the bottom and click the **"Commit changes"** button. Your updates will be live on the website in a few moments.
+
+---
+
+### 1. How to Add a New Performance
+
+Find the `"performances"` section in `data.json`. To add a new event, copy an existing performance block and paste it at the top of the list.
+
+**Example Performance Block:**
+
+```json
+{
+  "day": "18",
+  "month": "OCT",
+  "title": "Performance at Oakmont Senior Center",
+  "time": "2:00 PM - 3:00 PM",
+  "location": "Oakmont Senior Living",
+  "description": "An afternoon of jazz classics for the residents.",
+  "tags": ["Community Event", "Private Performance"]
+}
+```
+
+-   **Important:** Don't forget the comma `,` between each performance block.
+
+---
+
+### 2. How to Add Photos & Videos to the Gallery
+
+This is a two-step process: first, you upload the media file to the `images` folder, and second, you add its information to `data.json`.
+
+#### Step 2a: Uploading Image Files
+
+1.  Navigate to the `images` folder in the repository: [images/](images/)
+2.  Click **"Add file"** > **"Upload files"**.
+3.  Drag and drop your image file(s) here.
+4.  Click **"Commit changes"**.
+5.  Once uploaded, click on your new image file and copy its name (e.g., `my-cool-photo.jpg`).
+
+#### Step 2b: Adding Items to the Gallery
+
+Find the `"gallery"` section in `data.json`. Copy and paste a block and update the details.
+
+**To add an IMAGE:**
+
+```json
+{
+  "type": "image",
+  "category": "performances",
+  "url": "images/my-cool-photo.jpg",
+  "title": "Spring Concert"
+}
+```
+
+-   `category`: Must be one of `recent`, `performances`, `rehearsals`, or `members`. This decides which tab it appears under.
+-   `url`: Must be `images/` followed by the exact filename you uploaded.
+-   `title`: The text that appears when you hover over the image.
+
+**To add a VIDEO (from YouTube or Google Drive):**
+
+You need an **embed link** for videos.
+
+-   **For YouTube:** Right-click the video > "Copy embed code" > grab the `src` URL from the code. It looks like `https://www.youtube.com/embed/VIDEO_ID`.
+-   **For Google Drive:** Open the video > Click the three dots > "Share" > Change "General access" to "Anyone with the link" > Click "Copy link" > Open the link in a new tab > Click the three dots again > "Embed item" > grab the `src` URL. It looks like `https://drive.google.com/file/d/FILE_ID/preview`.
+
+```json
+{
+  "type": "video",
+  "category": "recent",
+  "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+  "title": "Our latest performance!"
+}
+```
+
+-   `type`: Must be `"video"`.
+-   `category`: Same as for images.
+-   `embedUrl`: The special embed link you copied.
+
+---
+
+### 3. How to Update the Officer List
+
+Find the `"officers"` section at the top of `data.json`. Simply edit the names for each role.
+
+**Example:**
+
+```json
+"officers": {
+  "president": "New President Name",
+  "vicePresident": "New VP Name",
+  "conductor": "New Conductor",
+  // ...and so on
+}
+```
+
+---
+
+### Local Development
+
+For those comfortable with code, you can run a local server to see your changes live before pushing to GitHub.
+
+1.  Make sure you have Python 3 installed.
+2.  Open your terminal or command prompt in the project folder.
+3.  Run the following command:
+    -   On Mac/Linux: `python3 -m http.server`
+    -   On Windows: `python -m http.server`
+4.  Open your web browser and go to `http://localhost:8000`.
 
 ## 🎵 Features
 
