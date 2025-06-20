@@ -72,9 +72,22 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error fetching or processing data:', error);
             const performancesGrid = document.getElementById('upcoming-performances-grid');
             if(performancesGrid) performancesGrid.innerHTML = '<p>Could not load performance data. Please try again later.</p>';
-            const galleryGrid = document.getElementById('gallery-grid');
-            if(galleryGrid) galleryGrid.innerHTML = '<p>Could not load gallery data. Please try again later.</p>';
         });
+
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            const subject = `Message from ${name}`;
+            const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+
+            window.location.href = `mailto:dvjazzclub@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        });
+    }
 
     function createPerformanceCard(perf, galleryItems) {
         const card = document.createElement('div');
@@ -126,8 +139,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderContactInfo(officers) {
-        // This function is now empty as per the user's request
-        // to remove the dynamically generated contact cards.
+        const container = document.getElementById('contact-info');
+        if (!container) return;
+        
+        const officerList = `
+            <strong>Vice President:</strong> ${officers.vicePresident}<br>
+            <strong>Conductor:</strong> ${officers.conductor}<br>
+            <strong>Secretary:</strong> ${officers.secretary}<br>
+            <strong>Treasurer:</strong> ${officers.treasurer}<br>
+            <strong>PR Officer:</strong> ${officers.prOfficer}
+        `;
+
+        container.innerHTML = `
+             <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                    <h4>Meetings</h4>
+                    <p>Fridays at Lunch, P124 (Band Room)</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-user-tie"></i>
+                <div>
+                    <h4>Faculty Advisor</h4>
+                    <p>${officers.facultyAdvisor}</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-user-graduate"></i>
+                <div>
+                    <h4>President</h4>
+                    <p>${officers.president}</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-users"></i>
+                <div>
+                    <h4>Club Officers</h4>
+                    <p class="officer-list">${officerList}</p>
+                </div>
+            </div>
+        `;
     }
 
     // --- Modal Logic ---

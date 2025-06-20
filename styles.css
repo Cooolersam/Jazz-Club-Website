@@ -621,6 +621,7 @@ p {
 .join-details {
     display: grid;
     gap: 1.5rem;
+    margin-top: 2rem;
 }
 
 .detail-item {
@@ -648,13 +649,13 @@ p {
     margin-bottom: 0.5rem;
 }
 
-.join-form {
+.contact-form-container {
     background: #f8f9fa;
     padding: 2rem;
     border-radius: 15px;
 }
 
-.join-form h3 {
+.contact-form-container h3 {
     color: #1C3B8A;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -670,6 +671,37 @@ p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
+}
+
+.contact-info {
+    display: grid;
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.contact-item i {
+    font-size: 1.5rem;
+    color: #1C3B8A;
+    margin-top: 0.2rem;
+}
+
+.contact-item h4 {
+    color: #1C3B8A;
+    margin-bottom: 0.5rem;
+}
+
+.contact-item p.officer-list {
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .contact-form {
@@ -719,6 +751,10 @@ textarea {
     padding: 2.5rem;
     border-radius: 15px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
 }
 
 .contact-socials h3 {
