@@ -649,19 +649,6 @@ p {
     margin-bottom: 0.5rem;
 }
 
-.contact-form-container {
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 15px;
-}
-
-.contact-form-container h3 {
-    color: #1C3B8A;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-/* Contact Section */
 .contact {
     padding: 100px 0;
     background: #f8f9fa;
@@ -669,13 +656,16 @@ p {
 
 .contact-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    justify-items: center;
     gap: 4rem;
 }
 
 .contact-info {
     display: grid;
     gap: 2rem;
+    width: 100%;
+    max-width: 600px;
 }
 
 .contact-item {
@@ -702,48 +692,6 @@ p {
 .contact-item p.officer-list {
     font-size: 1rem;
     line-height: 1.5;
-}
-
-.contact-form {
-    background: white;
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.contact-form h3 {
-    color: #1C3B8A;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: #FFC72C;
-}
-
-textarea {
-    height: 120px;
-    resize: vertical;
 }
 
 .contact-socials {

@@ -74,21 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if(performancesGrid) performancesGrid.innerHTML = '<p>Could not load performance data. Please try again later.</p>';
         });
 
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            const subject = `Message from ${name}`;
-            const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
-
-            window.location.href = `mailto:dvjazzclub@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        });
-    }
-
     function createPerformanceCard(perf, galleryItems) {
         const card = document.createElement('div');
         card.className = 'performance-card';
