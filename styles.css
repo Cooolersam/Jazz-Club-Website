@@ -242,6 +242,11 @@ p {
     font-size: 1.2rem;
 }
 
+/* Section Dividers */
+.about, .performances, .gallery, .join, .contact {
+    border-top: 1px solid #e0e0e0;
+}
+
 /* About Section */
 .about {
     padding: 100px 0;
@@ -320,7 +325,8 @@ p {
     display: flex;
     gap: 2rem;
     overflow-x: auto;
-    padding-bottom: 1.5rem;
+    padding: 20px 10px;
+    margin: 0 -10px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: #1C3B8A #e9ecef;
@@ -345,6 +351,14 @@ p {
     background: #999;
 }
 
+.no-events-message {
+    width: 100%;
+    text-align: center;
+    padding: 2rem;
+    color: #777;
+    font-style: italic;
+}
+
 .performance-card {
     background: white;
     border-radius: 15px;
@@ -355,11 +369,17 @@ p {
     flex-direction: column;
     flex: 0 0 350px;
     max-width: 350px;
+    border: 1px solid #ddd;
+    position: relative;
+    z-index: 1;
+    color: #fdb927;
+    border-color: #003366;
 }
 
 .performance-card:hover {
-    transform: translateY(-10px);
+    transform: scale(1.05);
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    z-index: 10;
 }
 
 .performance-date {
@@ -371,6 +391,7 @@ p {
     justify-content: center;
     align-items: center;
     min-width: 100px;
+    font-style: italic;
 }
 
 .performance-date .day {
@@ -382,6 +403,12 @@ p {
 .performance-date .month {
     font-size: 0.9rem;
     opacity: 0.8;
+}
+
+.performance-date .year {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 4px;
 }
 
 .performance-details {
@@ -438,7 +465,7 @@ p {
 
 .tab-btn {
     background: transparent;
-    border: 2px solid #e0e0e0;
+    border: 2px solid #ccc;
     color: #555;
     padding: 10px 20px;
     margin: 0 5px;
@@ -453,6 +480,8 @@ p {
     background-color: #fdb927;
     color: #003366;
     border-color: #fdb927;
+    overflow: hidden;
+    border: 2px solid #ddd;
 }
 
 .tab-btn.active {
@@ -465,22 +494,16 @@ p {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 30px;
+    align-items: start;
 }
 
 .gallery-item {
-    background-color: #f9f9f9;
+    background-color: #fff;
     border-radius: 10px;
-    overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    aspect-ratio: 4 / 3;
-}
-
-/* Special styling for video items to prevent clipping */
-.gallery-item:has(.video-container) {
-    overflow: visible;
-    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid #ddd;
 }
 
 .gallery-item:hover {
@@ -490,36 +513,18 @@ p {
 
 .gallery-item img {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
-}
-
-.gallery-item-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 51, 102, 0.8);
-    color: #fff;
-    padding: 15px;
-    text-align: center;
-    font-weight: 600;
-    opacity: 0;
-    transform: translateY(100%);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    z-index: 2;
-}
-
-.gallery-item:hover .gallery-item-info {
-    opacity: 1;
-    transform: translateY(0);
+    display: block;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }
 
 .video-container {
     position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
     height: 0;
-    overflow: visible;
     width: 100%;
 }
 
@@ -530,7 +535,15 @@ p {
     width: 100%;
     height: 100%;
     border: 0;
-    z-index: 1;
+}
+
+.gallery-item-info {
+    padding: 15px;
+    text-align: center;
+    font-weight: 600;
+    background-color: #f9f9f9;
+    color: #333;
+    border-top: 1px solid #eee;
 }
 
 .gallery-empty {
@@ -590,6 +603,7 @@ p {
     padding: 1rem;
     background: #f8f9fa;
     border-radius: 10px;
+    border: 1px solid #ddd;
 }
 
 .detail-item i {
@@ -640,6 +654,10 @@ p {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
 }
 
 .contact-item i {
@@ -684,7 +702,7 @@ p {
 input, select, textarea {
     width: 100%;
     padding: 12px 15px;
-    border: 2px solid #e9ecef;
+    border: 2px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
@@ -914,4 +932,91 @@ textarea {
         text-align: center;
         gap: 0.5rem;
     }
+}
+
+/* --- Modal Styles --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 2000;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    color: #333;
+}
+
+.modal-title {
+    margin-bottom: 20px;
+    color: #1C3B8A;
+    text-align: center;
+}
+
+.modal-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.modal-gallery-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Past Performances Section */
+.past-performances {
+    padding: 100px 0;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+}
+
+.past-performances-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
 } 

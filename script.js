@@ -57,106 +57,94 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            console.log('Successfully fetched data.json');
             return response.json();
         })
         .then(data => {
-            console.log('Parsed data:', data);
-            console.log('Number of performances:', data.performances.length);
-            console.log('Number of gallery items:', data.gallery.length);
-            renderPerformances(data.performances);
-            renderGallery(data.gallery, 'recent');
+            // --- Performance Sorting Logic ---
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Set to midnight to compare days accurately
+
+            const upcomingPerformances = [];
+            const pastPerformances = [];
+
+            const monthMap = { JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5, JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11 };
+
+            data.performances.forEach(perf => {
+                const perfDate = new Date(perf.year, monthMap[perf.month.toUpperCase()], perf.day);
+                if (perfDate >= today) {
+                    upcomingPerformances.push(perf);
+                } else {
+                    pastPerformances.push(perf);
+                }
+            });
+
+            // Sort past performances to show the most recent first
+            pastPerformances.sort((a, b) => {
+                const dateA = new Date(a.year, monthMap[a.month.toUpperCase()], a.day);
+                const dateB = new Date(b.year, monthMap[b.month.toUpperCase()], b.day);
+                return dateB - dateA; // Descending order
+            });
+
+            renderUpcomingPerformances(upcomingPerformances, data.gallery);
+            renderPastPerformances(pastPerformances, data.gallery);
             renderContactInfo(data.officers);
-            setupGalleryTabs(data.gallery);
         })
         .catch(error => {
             console.error('Error fetching or processing data:', error);
-            const performancesGrid = document.getElementById('performances-grid');
+            const performancesGrid = document.getElementById('upcoming-performances-grid');
             if(performancesGrid) performancesGrid.innerHTML = '<p>Could not load performance data. Please try again later.</p>';
             const galleryGrid = document.getElementById('gallery-grid');
             if(galleryGrid) galleryGrid.innerHTML = '<p>Could not load gallery data. Please try again later.</p>';
         });
 
-    function renderPerformances(performances) {
-        const grid = document.getElementById('performances-grid');
-        if (!grid) {
-            console.error('Performances grid not found');
+    function createPerformanceCard(perf, galleryItems) {
+        const card = document.createElement('div');
+        card.className = 'performance-card';
+        card.innerHTML = `
+            <div class="performance-date">
+                <span class="day">${perf.day}</span>
+                <span class="month">${perf.month}</span>
+                <span class="year">${perf.year}</span>
+            </div>
+            <div class="performance-details">
+                <h3>${perf.title}</h3>
+                <p class="performance-time"><i class="far fa-clock"></i> ${perf.time}</p>
+                <p class="performance-location"><i class="fas fa-map-marker-alt"></i> ${perf.location}</p>
+                <p class="performance-description">${perf.description}</p>
+                <div class="performance-tags">
+                    ${perf.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+            </div>
+        `;
+        card.addEventListener('click', () => openModal(perf.title, galleryItems));
+        return card;
+    }
+
+    function renderUpcomingPerformances(performances, galleryItems) {
+        const grid = document.getElementById('upcoming-performances-grid');
+        if (!grid) return;
+
+        if (performances.length === 0) {
+            grid.innerHTML = '<p class="no-events-message">No upcoming performances scheduled. Check back soon!</p>';
             return;
         }
-        console.log('Rendering', performances.length, 'performances');
+
         grid.innerHTML = '';
-        performances.forEach((perf, index) => {
-            console.log('Rendering performance', index + 1, ':', perf.title);
-            const card = document.createElement('div');
-            card.className = 'performance-card';
-            card.innerHTML = `
-                <div class="performance-date">
-                    <span class="day">${perf.day}</span>
-                    <span class="month">${perf.month}</span>
-                </div>
-                <div class="performance-details">
-                    <h3>${perf.title}</h3>
-                    <p class="performance-time"><i class="far fa-clock"></i> ${perf.time}</p>
-                    <p class="performance-location"><i class="fas fa-map-marker-alt"></i> ${perf.location}</p>
-                    <p class="performance-description">${perf.description}</p>
-                    <div class="performance-tags">
-                        ${perf.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                </div>
-            `;
+        performances.forEach(perf => {
+            const card = createPerformanceCard(perf, galleryItems);
             grid.appendChild(card);
         });
     }
 
-    function renderGallery(galleryItems, category) {
-        const grid = document.getElementById('gallery-grid');
+    function renderPastPerformances(performances, galleryItems) {
+        const grid = document.getElementById('past-performances-grid');
         if (!grid) return;
         grid.innerHTML = '';
-        
-        const filteredItems = galleryItems.filter(item => item.category === category);
-
-        if (filteredItems.length === 0) {
-            grid.innerHTML = '<p class="gallery-empty">No items to display in this category yet. Check back soon!</p>';
-            return;
-        }
-
-        filteredItems.forEach(item => {
-            const galleryItem = document.createElement('div');
-            galleryItem.className = 'gallery-item';
-
-            if (item.type === 'image') {
-                galleryItem.innerHTML = `
-                    <img src="${item.url}" alt="${item.title}" loading="lazy">
-                    <div class="gallery-item-info">
-                        <p>${item.title}</p>
-                    </div>
-                `;
-            } else if (item.type === 'video') {
-                galleryItem.innerHTML = `
-                    <div class="video-container">
-                        <iframe src="${item.embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                    </div>
-                    <div class="gallery-item-info">
-                        <p>${item.title}</p>
-                    </div>
-                `;
-            }
-            grid.appendChild(galleryItem);
+        performances.forEach(perf => {
+            const card = createPerformanceCard(perf, galleryItems);
+            grid.appendChild(card);
         });
     }
-    
-    function setupGalleryTabs(galleryItems) {
-        const tabs = document.querySelectorAll('.tab-btn');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const category = tab.getAttribute('data-category');
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                renderGallery(galleryItems, category);
-            });
-        });
-    }
-
 
     function renderContactInfo(officers) {
         const container = document.getElementById('contact-info');
@@ -221,5 +209,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `;
+    }
+
+    // --- Modal Logic ---
+    const modal = document.getElementById('performance-modal');
+    const modalCloseBtn = document.querySelector('.modal-close-btn');
+    const modalGalleryGrid = document.getElementById('modal-gallery-grid');
+    const modalTitle = document.querySelector('.modal-title');
+
+    function openModal(performanceTitle, galleryItems) {
+        const performanceImages = galleryItems.filter(item => item.performance === performanceTitle && item.type === 'image');
+        
+        modalTitle.textContent = `${performanceTitle} - Gallery`;
+        modalGalleryGrid.innerHTML = ''; // Clear previous images
+
+        if (performanceImages.length > 0) {
+            performanceImages.forEach(item => {
+                const img = document.createElement('img');
+                img.src = item.url;
+                img.alt = item.title;
+                modalGalleryGrid.appendChild(img);
+            });
+        } else {
+            modalGalleryGrid.innerHTML = '<p>No images available for this performance yet.</p>';
+        }
+
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+
+    // Event listener for closing the modal
+    if (modal) {
+        modalCloseBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
     }
 }); 

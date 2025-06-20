@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dougherty Valley High School Jazz Club</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -97,36 +98,28 @@
         </div>
     </section>
 
-    <!-- Performances Section -->
-    <section id="performances" class="performances">
+    <!-- Upcoming Performances Section -->
+    <section id="upcoming-performances" class="performances">
         <div class="container">
             <div class="section-header">
-                <h2>Our Performances</h2>
-                <p>Sharing our love for jazz with the community</p>
+                <h2>Upcoming Performances</h2>
+                <p>Catch us live at our next event!</p>
             </div>
-            <div class="performances-grid" id="performances-grid">
-                <!-- Performances will be dynamically loaded here -->
+            <div id="upcoming-performances-grid" class="performances-grid">
+                <!-- Upcoming performances will be dynamically loaded here -->
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery">
+    <!-- Past Performances Section -->
+    <section id="past-performances" class="past-performances">
         <div class="container">
             <div class="section-header">
-                <h2>Photo & Video Gallery</h2>
-                <p>Capturing our musical journey through the years</p>
+                <h2>Past Performances</h2>
+                <p>A look back at our memorable events. Click any event to see photos!</p>
             </div>
-            <div class="gallery-tabs">
-                <button class="tab-btn active" data-category="recent">Recent Events</button>
-                <button class="tab-btn" data-category="performances">Performances</button>
-                <button class="tab-btn" data-category="rehearsals">Rehearsals</button>
-                <button class="tab-btn" data-category="members">Club Members</button>
-            </div>
-            <div class="gallery-content">
-                <div class="gallery-grid" id="gallery-grid">
-                    <!-- Gallery items will be dynamically loaded here -->
-                </div>
+            <div id="past-performances-grid" class="past-performances-grid">
+                <!-- Past performances will be dynamically loaded here -->
             </div>
         </div>
     </section>
@@ -299,6 +292,17 @@
             </div>
         </div>
     </footer>
+
+    <!-- Performance Gallery Modal -->
+    <div id="performance-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <h3 class="modal-title">Performance Gallery</h3>
+            <div id="modal-gallery-grid" class="modal-gallery-grid">
+                <!-- Images will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
