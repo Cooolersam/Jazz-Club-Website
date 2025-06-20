@@ -1,4 +1,10 @@
 {
+  "heroImages": [
+    "https://images.unsplash.com/photo-1511192336575-5a79af67d629?auto=format&fit=crop&w=1920&q=80",
+    "https://images.unsplash.com/photo-1520442244661-634952aaa349?auto=format&fit=crop&w=1920&q=80",
+    "https://images.unsplash.com/photo-1558307049-50993a456de7?auto=format&fit=crop&w=1920&q=80",
+    "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1920&q=80"
+  ],
   "officers": {
     "president": "Samarth Rao",
     "vicePresident": "Iris",
@@ -104,38 +110,6 @@
       "category": "recent",
       "url": "images/placeholder.svg",
       "title": "Jazz Festival Fun",
-      "performance": "Winter Arts Festival",
-      "year": 2025
-    },
-    {
-      "type": "image",
-      "category": "performances",
-      "url": "images/placeholder.svg",
-      "title": "Our Sax Section",
-      "performance": "Winter Arts Festival",
-      "year": 2025
-    },
-    {
-      "type": "image",
-      "category": "performances",
-      "url": "images/placeholder.svg",
-      "title": "Our Sax Section",
-      "performance": "Winter Arts Festival",
-      "year": 2025
-    },
-    {
-      "type": "image",
-      "category": "performances",
-      "url": "images/placeholder.svg",
-      "title": "Our Sax Section",
-      "performance": "Winter Arts Festival",
-      "year": 2025
-    },
-    {
-      "type": "image",
-      "category": "performances",
-      "url": "images/placeholder.svg",
-      "title": "Our Sax Section",
       "performance": "Winter Arts Festival",
       "year": 2025
     },

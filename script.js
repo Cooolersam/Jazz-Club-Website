@@ -29,28 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Contact form submission
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const message = document.getElementById('message').value.trim();
-
-            if (!name || !email || !message) {
-                alert('Please fill out all fields.');
-                return;
-            }
-
-            const subject = `Message from ${name}`;
-            const mailtoLink = `mailto:dvjazzclub@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message + "\n\nFrom: " + email)}`;
-
-            window.location.href = mailtoLink;
-            contactForm.reset();
-        });
-    }
-
     // Fetch and render dynamic content
     fetch('data.json')
         .then(response => {
@@ -85,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return dateB - dateA; // Descending order
             });
 
+            setupHeroSlideshow(data.heroImages);
             renderUpcomingPerformances(upcomingPerformances, data.gallery);
             renderPastPerformances(pastPerformances, data.gallery);
             renderContactInfo(data.officers);
@@ -147,68 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderContactInfo(officers) {
-        const container = document.getElementById('contact-info');
-        if (!container) return;
-        
-        const officerList = `
-            <strong>Vice President:</strong> ${officers.vicePresident}<br>
-            <strong>Conductor:</strong> ${officers.conductor}<br>
-            <strong>Secretary:</strong> ${officers.secretary}<br>
-            <strong>Treasurer:</strong> ${officers.treasurer}<br>
-            <strong>PR Officer:</strong> ${officers.prOfficer}
-        `;
-
-        container.innerHTML = `
-            <div class="contact-item">
-                <i class="fas fa-envelope"></i>
-                <div>
-                    <h4>Club Email</h4>
-                    <p><a href="mailto:dvjazzclub@gmail.com">dvjazzclub@gmail.com</a></p>
-                </div>
-            </div>
-            <div class="contact-item">
-                <i class="fab fa-instagram"></i>
-                <div>
-                    <h4>Instagram</h4>
-                    <p><a href="https://www.instagram.com/dvhsjazzclub" target="_blank">@dvhsjazzclub</a></p>
-                </div>
-            </div>
-            <div class="contact-item">
-                <i class="fab fa-discord"></i>
-                <div>
-                    <h4>Discord</h4>
-                    <p><a href="https://discord.gg/ap65wjgm4k" target="_blank">Join our Server</a></p>
-                </div>
-            </div>
-             <div class="contact-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <div>
-                    <h4>Meetings</h4>
-                    <p>Fridays at Lunch, P124 (Band Room)</p>
-                </div>
-            </div>
-            <div class="contact-item">
-                <i class="fas fa-user-tie"></i>
-                <div>
-                    <h4>Faculty Advisor</h4>
-                    <p>${officers.facultyAdvisor}</p>
-                </div>
-            </div>
-            <div class="contact-item">
-                <i class="fas fa-user-graduate"></i>
-                <div>
-                    <h4>President</h4>
-                    <p>${officers.president}</p>
-                </div>
-            </div>
-            <div class="contact-item">
-                <i class="fas fa-users"></i>
-                <div>
-                    <h4>Club Officers</h4>
-                    <p class="officer-list">${officerList}</p>
-                </div>
-            </div>
-        `;
+        // This function is now empty as per the user's request
+        // to remove the dynamically generated contact cards.
     }
 
     // --- Modal Logic ---
@@ -254,5 +173,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeModal();
             }
         });
+    }
+
+    // --- Hero Slideshow Logic ---
+    function setupHeroSlideshow(imageUrls) {
+        const hero = document.querySelector('.hero');
+        const prevBtn = document.getElementById('hero-prev');
+        const nextBtn = document.getElementById('hero-next');
+        let currentIndex = 0;
+        let intervalId = null;
+
+        // Preload images for smoother transitions
+        imageUrls.forEach(url => {
+            const img = new Image();
+            img.src = url;
+        });
+
+        function showImage(index) {
+            hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${imageUrls[index]}')`;
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % imageUrls.length;
+            showImage(currentIndex);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + imageUrls.length) % imageUrls.length;
+            showImage(currentIndex);
+        }
+
+        function startSlideshow() {
+            stopSlideshow(); // Prevent multiple intervals
+            intervalId = setInterval(nextImage, 1500); // Change image every 7 seconds
+        }
+
+        function stopSlideshow() {
+            clearInterval(intervalId);
+        }
+
+        // Event Listeners
+        nextBtn.addEventListener('click', () => {
+            nextImage();
+            startSlideshow(); // Reset timer on manual navigation
+        });
+
+        prevBtn.addEventListener('click', () => {
+            prevImage();
+            startSlideshow(); // Reset timer on manual navigation
+        });
+
+        // Initialize
+        showImage(currentIndex);
+        startSlideshow();
     }
 }); 
