@@ -149,8 +149,8 @@ Edit the CSS variables in `styles.css`:
 ### Updating Content
 - **Club Information**: Edit the content in `index.html`
 - **Performances**: Update the performances section with your actual events
-- **Meeting Times**: Modify the meeting schedule and location
-- **Contact Details**: Update faculty advisor and club leadership information
+- **Meeting Times**: Modify the meeting schedule and location (currently P124, Wednesdays after school)
+- **Contact Details**: Update faculty advisor, club leadership, and email (currently dvjazzclub@gmail.com)
 
 ### Adding Real Photos
 1. Replace the placeholder images in the gallery sections
@@ -204,7 +204,7 @@ Update the performances section in `index.html`:
 ### Managing Gallery
 Organize photos into the four categories:
 - Recent Events
-- Performances  
+- Performances
 - Rehearsals
 - Club Members
 

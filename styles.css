@@ -523,6 +523,10 @@ p {
     margin-top: 0.2rem;
 }
 
+.detail-item i.fa-sun {
+    color: #FFC72C;
+}
+
 .detail-item h4 {
     color: #1C3B8A;
     margin-bottom: 0.5rem;
@@ -572,6 +576,11 @@ p {
 .contact-item h4 {
     color: #1C3B8A;
     margin-bottom: 0.5rem;
+}
+
+.contact-item p.officer-list {
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .contact-form {
@@ -652,6 +661,18 @@ textarea {
 
 .footer-section a:hover {
     color: #FFC72C;
+}
+
+.footer-section p a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(255,255,255,0.5);
+    transition: all 0.3s ease;
+}
+
+.footer-section p a:hover {
+    color: #FFC72C;
+    border-bottom-color: #FFC72C;
 }
 
 .social-links {
